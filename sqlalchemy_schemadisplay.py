@@ -126,8 +126,10 @@ def _render_table_html(table, metadata, show_indexes, show_datatypes):
     html += '</TABLE>>'
     return html
 
-def create_schema_graph(tables=None, metadata=None, show_indexes=True, show_datatypes=True, font="Bitstream-Vera Sans",
-    concentrate=True, relation_options={}, rankdir='TB'):
+def create_schema_graph(tables=None, metadata=None, show_indexes=True, 
+                        show_datatypes=True, font="Bitstream-Vera Sans",
+                        concentrate=True, relation_options={}, rankdir='TB',
+                        schema='public'):
     relation_kwargs = {
         'fontsize':"7.0"
     }
@@ -137,7 +139,7 @@ def create_schema_graph(tables=None, metadata=None, show_indexes=True, show_data
         metadata = tables[0].metadata
     elif not tables and metadata:
         if not len(metadata.tables):
-            metadata.reflect()
+            metadata.reflect(schema=schema)
         tables = metadata.tables.values()
     else:
         raise Exception("You need to specify at least tables or metadata")
